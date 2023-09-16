@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Display Excel Spreadsheet in Table</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.3/xlsx.full.min.js"></script>
+</head>
+<body>
+  <h1>Excel Spreadsheet Viewer</h1>
+  <input type="file" id="excelFile" accept=".xlsx, .xls" />
+  <button onclick="handleFile()">Load Excel File</button>
+  <br />
+  <label for="searchInput">Search: </label>
+  <input type="text" id="searchInput" />
+  <button onclick="searchTable()">Search</button>
+  <table id="excelTable" border="1"></table>
+
+  <script>
+    let originalData = []; // Store the original data
+    let filteredData = []; // Store the filtered data
+
+    function handleFile() {
+      const input = document.getElementById('excelFile');
+      const table = document.getElementById('excelTable');
+
+      const file = input.files[0];
+      const reader = new FileReader();
+
+      reader.onload = function (e) {
+        const data = e.target.result;
+        const workbook = XLSX.read(data, { type: 'binary' });
+        const sheet_name_list = workbook.SheetNames[0];
+        originalData = XLSX.utils.sheet_to_json(workbook.Sheets[sheet_name_list]);
+
+        displayTable(originalData);
+      };
+
+      reader.readAsBinaryString(file);
+    }
+
+    function displayTable(data) {
+      const table = document.getElementById('excelTable');
+      // Clear previous table data
+      table.innerHTML = '';
+
+      // Create a table header row
+      const headerRow = table.insertRow(0);
+      for (const key in data[0]) {
+        const headerCell = headerRow.insertCell();
+        headerCell.innerHTML = key;
+      }
+
+      // Insert data rows
+      data.forEach((rowData, index) => {
+        const row = table.insertRow(index + 1);
+        for (const key in rowData) {
+          const cell = row.insertCell();
+          cell.innerHTML = rowData[key];
+        }
+      });
+    }
+
+    function searchTable() {
+      const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+      filteredData = originalData.filter((rowData) => {
+        for (const key in rowData) {
+          if (rowData[key].toString().toLowerCase().includes(searchTerm)) {
+            return true;
+          }
+        }
+        return false;
+      });
+
+      displayTable(filteredData);
+    }
+  </script>
+</body>
+</html>
