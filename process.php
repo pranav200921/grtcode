@@ -6,7 +6,7 @@ $username = "sql12647941";
 $password = "XpFRXJHHxu";
 $database = "sql12647941";
 
-$conn = new mysqli($host, $username, $password, $dbname, $port);
+$conn = new mysqli($host, $username, $password, $database, $port);
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
