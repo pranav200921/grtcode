@@ -2,8 +2,8 @@
 // Establish a database connection (Replace these with your own database credentials)
 $host = "sql12.freesqldatabase.com";
 $username = "sql12647941";
-$password = "your_password";
-$database = "https://www.phpmyadmin.co/db_structure.php?server=1&db=sql12647941";
+$password = "XpFRXJHHxu";
+$database = "sql12647941";
 
 $conn = new mysqli($host, $username, $password, $database);
 
