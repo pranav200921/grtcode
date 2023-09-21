@@ -1,11 +1,12 @@
 <?php
 // Establish a database connection (Replace these with your own database credentials)
 $host = "sql12.freesqldatabase.com";
+$port = "3306";
 $username = "sql12647941";
 $password = "XpFRXJHHxu";
 $database = "sql12647941";
 
-$conn = new mysqli($host, $username, $password, $database);
+$conn = new mysqli($servername . ":" . $port, $username, $password, $dbname);
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
